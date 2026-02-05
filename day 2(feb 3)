@@ -1,0 +1,64 @@
+1. Library System Implementation (Single Inheritance)
+In this code, we use super().__init__() to ensure the parent class handles the title and author while the child class handles the issued details.
+
+  # Parent Class
+class Book:
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+
+    def display_book_details(self):
+        print(f"Book: {self.title}")
+        print(f"Author: {self.author}")
+
+# Child Class inheriting from Book
+class IssuedBook(Book):
+    def __init__(self, title, author, issued_to, issued_date):
+        # Initializing parent class attributes using super()
+        super().__init__(title, author)
+        self.issued_to = issued_to
+        self.issued_date = issued_date
+
+    def display_issued_book_details(self):
+        # Calls the parent method first
+        self.display_book_details()
+        # Then adds the specific details for the issued book
+        print(f"Issued To: {self.issued_to}")
+        print(f"Due Date: {self.issued_date}")
+
+# --- Object Instantiation ---
+# Updated names: "Clean Code" by Robert C. Martin, issued to "Sarah Connor"
+member_record = IssuedBook("Clean Code", "Robert C. Martin", "Sarah Connor", "2026-03-15")
+
+print("--- Library Checkout Receipt ---")
+member_record.display_issued_book_details()
+
+3. Multiple Inheritance Example
+Since your task asked for an implementation of this as well, here is a common real-world scenario:
+
+class Microphone:
+    def record_audio(self):
+        print("Recording crystal clear audio...")
+
+class Monitor:
+    def show_display(self):
+        print("Rendering 4K resolution visuals...")
+
+# Child class inheriting from both Microphone and Monitor
+class PodcastStation(Microphone, Monitor):
+    def start_streaming(self):
+        print("Station is now LIVE on the server.")
+
+# Testing Multiple Inheritance with new object name
+my_studio = PodcastStation()
+my_studio.record_audio()  # From Microphone
+my_studio.show_display()  # From Monitor
+my_studio.start_streaming()
+
+
+Type,Description,Example
+Single,1 Parent → 1 Child,Book → IssuedBook
+Multilevel,Parent → Child → Grandchild,Device → Phone → iPhone
+Hierarchical,1 Parent → Multiple Children,Book → IssuedBook & DigitalBook
+Multiple,Multiple Parents → 1 Child,Microphone & Monitor → PodcastStation
+Hybrid,A mix of the above,A complex system combining Multiple and Hierarchical
