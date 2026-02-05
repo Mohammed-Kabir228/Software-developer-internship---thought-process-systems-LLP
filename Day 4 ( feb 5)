@@ -1,0 +1,98 @@
+Task 1: Hierarchical Inheritance (Bank System)
+In this system, BankAccount is the base, and we branch out into two specialized types.
+
+class BankAccount:
+    def __init__(self, account_holder, balance):
+        self.account_holder = account_holder
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+        print(f"Deposited {amount}. Current Balance: {self.balance}")
+
+    def withdraw(self, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+            print(f"Withdrew {amount}. Remaining Balance: {self.balance}")
+        else:
+            print("Insufficient funds!")
+
+    def display_balance(self):
+        print(f"Holder: {self.account_holder} | Balance: {self.balance}")
+
+class SavingsAccount(BankAccount):
+    def __init__(self, account_holder, balance, interest_rate):
+        super().__init__(account_holder, balance)
+        self.interest_rate = interest_rate
+
+    def add_interest(self):
+        interest = self.balance * (self.interest_rate / 100)
+        self.balance += interest
+        print(f"Interest of {self.interest_rate}% added. New Balance: {self.balance}")
+
+class CurrentAccount(BankAccount):
+    def __init__(self, account_holder, balance, overdraft_limit):
+        super().__init__(account_holder, balance)
+        self.overdraft_limit = overdraft_limit
+
+    def withdraw_with_overdraft(self, amount):
+        if amount <= (self.balance + self.overdraft_limit):
+            self.balance -= amount
+            print(f"Overdraft withdrawal successful! New Balance: {self.balance}")
+        else:
+            print("Overdraft limit exceeded!")
+
+# Testing the Bank System
+print("--- Savings Account Test ---")
+sa = SavingsAccount("Rahul", 1000, 4)
+sa.display_balance()
+sa.add_interest()
+
+print("\n--- Current Account Test ---")
+ca = CurrentAccount("Sneha", 500, 1000)
+ca.withdraw_with_overdraft(1200)
+
+
+Task 2: Hybrid Inheritance (College Management)
+This is the most complex type, combining Multiple and Hierarchical inheritance. Notice how we use explicit class calls to avoid the "Diamond Problem" of multiple inheritance.
+class Person:
+    def __init__(self, name):
+        self.name = name
+    
+    def display_person(self):
+        print(f"Name: {self.name}")
+
+class Student(Person):
+    def __init__(self, name, student_id):
+        Person.__init__(self, name)
+        self.student_id = student_id
+
+    def display_student(self):
+        print(f"Student ID: {self.student_id}")
+
+class SportsPlayer(Person):
+    def __init__(self, name, sport_name):
+        Person.__init__(self, name)
+        self.sport_name = sport_name
+
+    def display_sports_player(self):
+        print(f"Sport: {self.sport_name}")
+
+class CollegeStudent(Student, SportsPlayer):
+    def __init__(self, name, student_id, sport_name, college_name):
+        # Initializing both parents
+        Student.__init__(self, name, student_id)
+        SportsPlayer.__init__(self, name, sport_name)
+        self.college_name = college_name
+
+    def display_college_student(self):
+        print(f"--- {self.college_name} Student Data ---")
+        self.display_person()
+        self.display_student()
+        self.display_sports_player()
+        print(f"College: {self.college_name}")
+
+# Testing the Hybrid System
+print("\n--- College Management Test ---")
+college_obj = CollegeStudent("Karan", "CS101", "Cricket", "IIT Bombay")
+college_obj.display_college_student()
