@@ -1,0 +1,76 @@
+# Topic 1: Classes and Objects - Assignment 1
+
+class Instagram:
+    def __init__(self, title, description, creator_name, location):
+        # Initializing instance attributes
+        self.title = title
+        self.description = description
+        self.creator_name = creator_name
+        self.location = location
+        self.likes = 0
+        self.comments = []  # List to store strings of comments
+
+    # --- Display Methods ---
+
+    def display_post_info(self):
+        print(f"Post by {self.creator_name} in {self.location}")
+        print(f"Title: {self.title}")
+        print(f"Description: {self.description}")
+
+    def display_likes(self):
+        print(f"Total Likes: {self.likes}")
+
+    def display_comments(self):
+        print(f"Comments ({len(self.comments)}):")
+        if not self.comments:
+            print("- No comments yet.")
+        for comment in self.comments:
+            print(f"- {comment}")
+
+    # --- Interaction Methods ---
+
+    def liked(self):
+        self.likes += 1
+
+    def disliked(self):
+        if self.likes > 0:
+            self.likes -= 1
+
+    def add_comment(self, comment_text):
+        self.comments.append(comment_text)
+
+
+# --- Object Instantiation and Testing ---
+
+# Creating the first reel
+reel1 = Instagram("Dancing", "Dancing with friends", "Alice", "Mumbai")
+
+# Interacting with reel1
+reel1.liked()
+reel1.liked()
+reel1.add_comment("Amazing moves! 🔥")
+reel1.add_comment("Where is this location?")
+
+# Displaying reel1 data
+print("--- Reel 1 Details ---")
+reel1.display_post_info()
+reel1.display_likes()
+reel1.display_comments()
+
+print("\n" + "-"*30 + "\n")
+
+# Creating the second reel
+reel2 = Instagram("Finance News", "Update on the budget", "Bob", "Delhi")
+reel2.liked()
+reel2.add_comment("Very informative, thanks!")
+
+# Displaying reel2 data
+print("--- Reel 2 Details ---")
+reel2.display_post_info()
+reel2.display_likes()
+reel2.display_comments()
+
+# Checking memory addresses
+print("\n--- Memory Allocation ---")
+print(f"Reel 1 ID: {id(reel1)}")
+print(f"Reel 2 ID: {id(reel2)}")
